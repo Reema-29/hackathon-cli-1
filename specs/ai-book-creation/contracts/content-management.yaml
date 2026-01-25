@@ -1,0 +1,300 @@
+# API Contract: Content Management Service
+
+## Overview
+This API provides endpoints for managing content within book projects, including chapters, sections, and content blocks.
+
+## Base URL
+`/api/v1`
+
+## Authentication
+All endpoints require authentication via Bearer token in the Authorization header:
+```
+Authorization: Bearer {your-api-token}
+```
+
+## Common Response Format
+All API responses follow this format:
+```json
+{
+  "success": true,
+  "data": {},
+  "message": "Success message",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+For errors:
+```json
+{
+  "success": false,
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Error message",
+    "details": {}
+  },
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+## Endpoints
+
+### POST /books/{bookId}/chapters
+Create a new chapter in a book
+
+#### Request
+```json
+{
+  "title": "Chapter Title",
+  "number": 1,
+  "content": "Chapter content (optional)",
+  "order": 0
+}
+```
+
+#### Response (201 Created)
+```json
+{
+  "success": true,
+  "data": {
+    "id": "chapter-id-123",
+    "book_id": "book-id-123",
+    "title": "Chapter Title",
+    "number": 1,
+    "status": "draft",
+    "content": "Chapter content (optional)",
+    "order": 0,
+    "creation_date": "2025-12-09T10:00:00Z",
+    "last_modified": "2025-12-09T10:00:00Z"
+  },
+  "message": "Chapter created successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+#### Validation
+- Title is required (400 error if missing)
+- Number must be a positive integer (400 error if invalid)
+- Order must be a non-negative integer (400 error if invalid)
+- Book must exist (404 error if not found)
+
+### GET /books/{bookId}/chapters
+List all chapters in a book
+
+#### Query Parameters
+- `status` (optional): Filter by status (draft, in-progress, review, complete)
+- `limit` (optional): Number of results to return (default: 20, max: 100)
+- `offset` (optional): Number of results to skip (default: 0)
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {
+    "chapters": [
+      {
+        "id": "chapter-id-123",
+        "title": "Chapter Title",
+        "number": 1,
+        "status": "draft",
+        "order": 0,
+        "creation_date": "2025-12-09T10:00:00Z",
+        "last_modified": "2025-12-09T10:00:00Z"
+      }
+    ],
+    "total": 1,
+    "limit": 20,
+    "offset": 0
+  },
+  "message": "Chapters retrieved successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+### PUT /books/{bookId}/chapters/{chapterId}
+Update chapter details
+
+#### Request
+```json
+{
+  "title": "Updated Chapter Title",
+  "number": 2,
+  "content": "Updated chapter content",
+  "status": "in-progress"
+}
+```
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {
+    "id": "chapter-id-123",
+    "book_id": "book-id-123",
+    "title": "Updated Chapter Title",
+    "number": 2,
+    "status": "in-progress",
+    "content": "Updated chapter content",
+    "last_modified": "2025-12-09T10:00:00Z"
+  },
+  "message": "Chapter updated successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+### POST /books/{bookId}/chapters/{chapterId}/sections
+Create a new section in a chapter
+
+#### Request
+```json
+{
+  "title": "Section Title",
+  "level": 2,
+  "content": "Section content (optional)",
+  "parent_id": "parent-section-id",  // optional for nested sections
+  "order": 0
+}
+```
+
+#### Response (201 Created)
+```json
+{
+  "success": true,
+  "data": {
+    "id": "section-id-123",
+    "chapter_id": "chapter-id-123",
+    "parent_id": "parent-section-id",
+    "title": "Section Title",
+    "level": 2,
+    "content": "Section content (optional)",
+    "order": 0,
+    "creation_date": "2025-12-09T10:00:00Z",
+    "last_modified": "2025-12-09T10:00:00Z"
+  },
+  "message": "Section created successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+#### Validation
+- Title is required (400 error if missing)
+- Level must be between 1 and 6 (400 error if invalid)
+- Order must be a non-negative integer (400 error if invalid)
+- Parent section must exist if provided (404 error if not found)
+
+### POST /books/{bookId}/content/generate
+Generate content using AI assistance
+
+#### Request
+```json
+{
+  "chapter_id": "chapter-id-123",
+  "section_id": "section-id-123",  // optional
+  "prompt": "Write a detailed explanation of AI model training",
+  "content_type": "paragraph",  // paragraph, code, list, etc.
+  "length": "medium"  // short, medium, long
+}
+```
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {
+    "content": "Generated content text...",
+    "validation_status": "pending",
+    "suggestions": [
+      "Consider adding a code example",
+      "Add more technical details"
+    ]
+  },
+  "message": "Content generated successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+#### Error Responses
+- 400: Invalid prompt or parameters
+- 429: Rate limit exceeded
+- 503: AI service temporarily unavailable
+
+### POST /books/{bookId}/validate
+Run comprehensive validation on book content
+
+#### Request (optional body)
+```json
+{
+  "validation_types": ["content", "citation", "style", "accessibility", "seo"]  // optional, defaults to all
+}
+```
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {
+    "validation_results": {
+      "content_accuracy": {
+        "status": "pass",
+        "issues": [],
+        "score": 95
+      },
+      "citation_compliance": {
+        "status": "warning",
+        "issues": [
+          {
+            "type": "missing_citation",
+            "location": "chapter-1/section-2",
+            "message": "Unverified claim found"
+          }
+        ],
+        "score": 85
+      },
+      "style_compliance": {
+        "status": "pass",
+        "issues": [],
+        "score": 90
+      },
+      "accessibility": {
+        "status": "pass",
+        "issues": [],
+        "score": 100
+      },
+      "seo": {
+        "status": "pass",
+        "issues": [],
+        "score": 88
+      }
+    },
+    "overall_status": "warning",
+    "overall_score": 91
+  },
+  "message": "Validation completed successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+### GET /books/{bookId}/export
+Export book in various formats
+
+#### Query Parameters
+- `format` (required): Export format (pdf, epub, html, markdown)
+- `include_citations` (optional): Whether to include citations (default: true)
+
+#### Response (200 OK)
+Returns the exported file with appropriate content-type header
+
+#### Error Responses
+- 400: Invalid format requested
+- 404: Book not found
+- 500: Export failed
+
+## Error Codes
+- `BOOK_NOT_FOUND`: Book with given ID does not exist
+- `CHAPTER_NOT_FOUND`: Chapter with given ID does not exist
+- `SECTION_NOT_FOUND`: Section with given ID does not exist
+- `INVALID_INPUT`: Provided data does not meet validation requirements
+- `ACCESS_DENIED`: User does not have permission to access this resource
+- `VALIDATION_ERROR`: Data validation failed
+- `AI_SERVICE_ERROR`: AI service is unavailable or returned an error
+- `EXPORT_ERROR`: Export process failed
+- `INTERNAL_ERROR`: An unexpected error occurred

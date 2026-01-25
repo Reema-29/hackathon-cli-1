@@ -1,0 +1,78 @@
+# ROS 2 Services Contract for Robotic Nervous System
+
+# This file defines the service contracts for the ROS 2 nervous system module
+# These follow ROS 2 standard service message formats
+
+---
+# Service: AddTwoInts (example service for demonstration)
+service: AddTwoInts
+package: example_interfaces
+description: Simple service to add two integers
+request:
+  a: int64
+  b: int64
+response:
+  sum: int64
+---
+
+# Service: SetBool
+service: SetBool
+package: std_srvs
+description: Service to set a boolean value
+request:
+  data: bool
+response:
+  success: bool
+  message: string
+---
+
+# Service: Trigger
+service: Trigger
+package: std_srvs
+description: Simple trigger service with no parameters
+request: {}
+response:
+  success: bool
+  message: string
+---
+
+# Custom Service: RobotCommand
+service: RobotCommand
+package: ros2_nervous_system_msgs
+description: Send a command to the robot nervous system
+request:
+  command_type: string  # e.g., "move_forward", "turn_left", "stop", "sensor_read"
+  parameters: string    # JSON string with command parameters
+  priority: int32       # 0=normal, 1=high, 2=critical
+response:
+  success: bool
+  message: string
+  execution_time: float64  # Time taken to execute command in seconds
+---
+
+# Custom Service: SensorDataRequest
+service: SensorDataRequest
+package: ros2_nervous_system_msgs
+description: Request sensor data from specific sensor
+request:
+  sensor_id: string
+  timeout: float64      # Timeout in seconds
+response:
+  success: bool
+  sensor_data: string   # JSON string with sensor readings
+  timestamp: float64    # Unix timestamp
+  message: string
+---
+
+# Custom Service: NodeStatusCheck
+service: NodeStatusCheck
+package: ros2_nervous_system_msgs
+description: Check the status of a specific ROS 2 node
+request:
+  node_name: string
+response:
+  node_exists: bool
+  node_active: bool
+  node_status: string   # "active", "inactive", "error", "unknown"
+  last_heartbeat: float64  # Unix timestamp
+  message: string

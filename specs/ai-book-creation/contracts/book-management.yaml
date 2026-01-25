@@ -1,0 +1,194 @@
+# API Contract: Book Management Service
+
+## Overview
+This API provides endpoints for managing book projects in the AI/Spec-Driven Book Creation system.
+
+## Base URL
+`/api/v1`
+
+## Authentication
+All endpoints require authentication via Bearer token in the Authorization header:
+```
+Authorization: Bearer {your-api-token}
+```
+
+## Common Response Format
+All API responses follow this format:
+```json
+{
+  "success": true,
+  "data": {},
+  "message": "Success message",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+For errors:
+```json
+{
+  "success": false,
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Error message",
+    "details": {}
+  },
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+## Endpoints
+
+### POST /books
+Create a new book project
+
+#### Request
+```json
+{
+  "title": "Book Title",
+  "author": "Author Name",
+  "description": "Book description",
+  "target_audience": "Intended audience"
+}
+```
+
+#### Response (201 Created)
+```json
+{
+  "success": true,
+  "data": {
+    "id": "book-id-123",
+    "title": "Book Title",
+    "author": "Author Name",
+    "description": "Book description",
+    "status": "draft",
+    "creation_date": "2025-12-09T10:00:00Z",
+    "last_modified": "2025-12-09T10:00:00Z",
+    "target_audience": "Intended audience"
+  },
+  "message": "Book created successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+#### Validation
+- Title and author are required (400 error if missing)
+- Title must be 1-200 characters (400 error if invalid)
+- Author must be 1-100 characters (400 error if invalid)
+
+### GET /books
+List all books for the authenticated user
+
+#### Query Parameters
+- `status` (optional): Filter by status (draft, in-progress, review, published)
+- `limit` (optional): Number of results to return (default: 20, max: 100)
+- `offset` (optional): Number of results to skip (default: 0)
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {
+    "books": [
+      {
+        "id": "book-id-123",
+        "title": "Book Title",
+        "author": "Author Name",
+        "status": "in-progress",
+        "creation_date": "2025-12-09T10:00:00Z",
+        "last_modified": "2025-12-09T10:00:00Z"
+      }
+    ],
+    "total": 1,
+    "limit": 20,
+    "offset": 0
+  },
+  "message": "Books retrieved successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+### GET /books/{id}
+Get details of a specific book
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {
+    "id": "book-id-123",
+    "title": "Book Title",
+    "author": "Author Name",
+    "description": "Book description",
+    "status": "in-progress",
+    "creation_date": "2025-12-09T10:00:00Z",
+    "last_modified": "2025-12-09T10:00:00Z",
+    "specification_id": "spec-123",
+    "target_audience": "Intended audience"
+  },
+  "message": "Book retrieved successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+#### Error Responses
+- 404: Book not found
+- 403: Access denied
+
+### PUT /books/{id}
+Update book details
+
+#### Request
+```json
+{
+  "title": "Updated Book Title",
+  "author": "Updated Author Name",
+  "description": "Updated description",
+  "status": "review"
+}
+```
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {
+    "id": "book-id-123",
+    "title": "Updated Book Title",
+    "author": "Updated Author Name",
+    "description": "Updated description",
+    "status": "review",
+    "last_modified": "2025-12-09T10:00:00Z"
+  },
+  "message": "Book updated successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+#### Error Responses
+- 400: Invalid data provided
+- 404: Book not found
+- 403: Access denied
+
+### DELETE /books/{id}
+Delete a book project
+
+#### Response (200 OK)
+```json
+{
+  "success": true,
+  "data": {},
+  "message": "Book deleted successfully",
+  "timestamp": "2025-12-09T10:00:00Z"
+}
+```
+
+#### Error Responses
+- 404: Book not found
+- 403: Access denied
+
+## Error Codes
+- `BOOK_NOT_FOUND`: Book with given ID does not exist
+- `INVALID_INPUT`: Provided data does not meet validation requirements
+- `ACCESS_DENIED`: User does not have permission to access this resource
+- `VALIDATION_ERROR`: Data validation failed
+- `INTERNAL_ERROR`: An unexpected error occurred

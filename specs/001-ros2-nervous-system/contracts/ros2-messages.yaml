@@ -1,0 +1,80 @@
+# ROS 2 Message Contracts for Robotic Nervous System
+
+# This file defines the message contracts for ROS 2 topics in the nervous system module
+# These follow ROS 2 standard message formats
+
+---
+# Message: String (standard)
+message: String
+package: std_msgs
+description: Simple string message
+fields:
+  data: string
+---
+
+# Message: Int32 (standard)
+message: Int32
+package: std_msgs
+description: Simple 32-bit integer message
+fields:
+  data: int32
+---
+
+# Message: Float64 (standard)
+message: Float64
+package: std_msgs
+description: Simple 64-bit float message
+fields:
+  data: float64
+---
+
+# Custom Message: RobotSensorData
+message: RobotSensorData
+package: ros2_nervous_system_msgs
+description: Message containing sensor data from robot nervous system
+fields:
+  sensor_id: string
+  sensor_type: string      # "lidar", "camera", "imu", "sonar", etc.
+  data: string            # JSON string with sensor-specific data
+  timestamp: float64      # Unix timestamp
+  confidence: float64     # Confidence level of the reading (0.0 to 1.0)
+  status: int32           # 0=normal, 1=warning, 2=error
+---
+
+# Custom Message: RobotMotionCommand
+message: RobotMotionCommand
+package: ros2_nervous_system_msgs
+description: Message containing motion commands for robot
+fields:
+  command: string         # "move_forward", "turn_left", "turn_right", "stop", etc.
+  linear_velocity: float64  # Linear velocity in m/s
+  angular_velocity: float64 # Angular velocity in rad/s
+  duration: float64       # Duration for the command in seconds
+  priority: int32         # 0=normal, 1=high, 2=critical
+---
+
+# Custom Message: NeuralSignal
+message: NeuralSignal
+package: ros2_nervous_system_msgs
+description: Message simulating neural signals in robot nervous system
+fields:
+  signal_type: string     # "motor_command", "sensory_input", "cognitive_decision"
+  source_node: string     # Originating node
+  target_node: string     # Target node
+  signal_strength: float64 # Signal strength (0.0 to 1.0)
+  content: string         # JSON string with signal content
+  timestamp: float64      # Unix timestamp
+---
+
+# Custom Message: SystemStatus
+message: SystemStatus
+package: ros2_nervous_system_msgs
+description: Message containing overall system status
+fields:
+  system_name: string
+  status: string          # "operational", "degraded", "error", "maintenance"
+  cpu_usage: float64      # CPU usage percentage
+  memory_usage: float64   # Memory usage percentage
+  active_nodes: int32     # Number of active ROS 2 nodes
+  connected_sensors: int32 # Number of connected sensors
+  timestamp: float64      # Unix timestamp
