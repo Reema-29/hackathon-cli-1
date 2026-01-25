@@ -9,14 +9,16 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-username.github.io',
+  url: 'https://reema-29.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub Pages, this is usually '/<projectName>/'
-  baseUrl: '/ai-book-creation/',
+  baseUrl: '/hackathon-cli-1/',
 
   // GitHub pages deployment config.
-  organizationName: 'your-username', // Usually your GitHub org/user name.
-  projectName: 'ai-book-creation', // Usually your repo name.
+  organizationName: 'Reema-29', // Usually your GitHub org/user name.
+  projectName: 'hackathon-cli-1', // Usually your repo name.
+  deploymentBranch: 'gh-pages',
+
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -48,14 +50,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Reema-29/hackathon-cli-1/tree/main/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/Reema-29/hackathon-cli-1/tree/main/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -84,7 +86,7 @@ const config = {
             label: 'Book',
           },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/Reema-29/hackathon-cli-1',
             label: 'GitHub',
             position: 'right',
           },
@@ -120,7 +122,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/Reema-29/hackathon-cli-1',
               },
             ],
           },
