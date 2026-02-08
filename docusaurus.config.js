@@ -65,6 +65,31 @@ const config = {
       }),
     ],
   ],
+  
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [],
+      },
+    ],
+    // Plugin to add the chatbot to all pages using HTML injection
+    async function chatbotPlugin() {
+      return {
+        name: 'chatbot-plugin',
+        injectHtmlTags() {
+          return {
+            postBodyTags: [
+              `<div id="chatbot-container"></div>`,
+            ],
+          };
+        },
+        getClientModules() {
+          return [require.resolve('./src/utils/chatbot-loader')];
+        },
+      };
+    },
+  ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */

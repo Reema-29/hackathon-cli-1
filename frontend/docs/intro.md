@@ -4,31 +4,39 @@ sidebar_position: 1
 
 # Introduction
 
-Welcome to the AI/Spec-Driven Book Creation System. This platform enables you to create high-quality books using AI assistance while maintaining spec-driven development principles and APA citation compliance.
+Welcome to the **Physical AI & Humanoid Robotics** book. This comprehensive guide explores the cutting-edge intersection of artificial intelligence and robotics, focusing on embodied intelligence and humanoid systems.
 
-## Features
+## Overview
 
-- **AI-Assisted Content Generation**: Generate content with AI assistance while maintaining quality control
-- **Concurrent Research**: Research while writing, not all upfront
-- **APA Citation Compliance**: Automatic validation of APA-style citations
-- **Spec-Driven Workflow**: Follow specifications to ensure quality and consistency
-- **Docusaurus Integration**: Built on Docusaurus for excellent documentation capabilities
+This platform enables you to create high-quality books using AI assistance while maintaining spec-driven development principles and APA citation compliance.
+
+## Key Topics Covered
+
+- Advanced AI integration for robotic systems
+- Humanoid robotics design and implementation
+- Embodied artificial intelligence principles
+- ROS2 nervous system architectures
+- Digital twin implementations with Gazebo and Unity
+- Jetson-based AI robotics platforms
+
+## Target Audience
+
+This book is designed for:
+- Robotics engineers and researchers
+- AI/ML practitioners interested in embodied systems
+- Students studying robotics and AI
+- Developers working on humanoid robots
+- Researchers exploring physical AI concepts
 
 ## Getting Started
 
-To get started with creating your first book:
+To get the most out of this book:
 
-1. Create a new book project
-2. Define your specifications
-3. Begin writing with AI assistance
-4. Validate your content and citations
-5. Publish to your Docusaurus site
+1. Start with the foundational concepts in the early chapters
+2. Progress through the implementation guides
+3. Experiment with the provided code examples
+4. Apply the concepts to your own projects
 
-## Architecture
+## About This Book
 
-The system consists of several key components:
-- AI Integration Layer for content generation
-- Research Manager for concurrent research
-- Validation Engine for quality assurance
-- Docusaurus Integration for publishing
-- Data Storage for content management
+This book represents the latest advances in physical AI and humanoid robotics, combining theoretical foundations with practical implementation guidance.

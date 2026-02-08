@@ -1,15 +1,8 @@
-/* Custom CSS for the documentation site */
-/* This file is referenced in docusaurus.config.js */
+/* Custom styles for the Docusaurus site */
 
-:root {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --ifm-code-font-size: 95%;
+/* Ensure the chatbot doesn't interfere with page content */
+html {
+  scroll-padding-bottom: 100px; /* Account for the chatbot button */
 }
 
-/* Additional custom styles can be added here */
+/* Additional custom styles can go here */

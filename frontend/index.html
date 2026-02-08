@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical AI & Humanoid Robotics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .sidebar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            align-self: start;
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #333;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #f0f0f0;
+            color: #667eea;
+            padding-left: 1rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: white;
+            color: #667eea;
+            transform: scale(1.1);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .chapter-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .chapter-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .chapter-item h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-robot"></i>
+            <span>Physical AI & Humanoid Robotics</span>
+        </div>
+        <div class="nav-links">
+            <a href="#home"><i class="fas fa-home"></i> Home</a>
+            <a href="#chapters"><i class="fas fa-book"></i> Chapters</a>
+            <a href="#resources"><i class="fas fa-lightbulb"></i> Resources</a>
+            <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="https://github.com/Reema-29/hackathon-cli-1" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>Physical AI & Humanoid Robotics</h1>
+        <p>Advancing the frontier of embodied artificial intelligence</p>
+        <p style="margin-top: 1rem;">A comprehensive guide to building intelligent robotic systems</p>
+        <button class="btn" style="margin-top: 1.5rem;"><i class="fas fa-book-reader"></i> Start Reading</button>
+    </section>
+
+    <div class="container">
+        <div class="content-grid">
+            <main class="main-content">
+                <section class="section" id="about">
+                    <h2><i class="fas fa-info-circle"></i> About This Book</h2>
+                    <p>Welcome to the AI/Spec-Driven Book Creation System. This platform enables you to create high-quality books using AI assistance while maintaining spec-driven development principles and APA citation compliance.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>AI Integration</h3>
+                            <p>Advanced AI-assisted content generation with quality control</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3>Concurrent Research</h3>
+                            <p>Research while writing, not all upfront</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h3>APA Compliance</h3>
+                            <p>Automatic validation of APA-style citations</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="chapters">
+                    <h2><i class="fas fa-book"></i> Book Chapters</h2>
+                    <p>This comprehensive book covers all aspects of Physical AI & Humanoid Robotics:</p>
+                    
+                    <div class="chapter-list">
+                        <div class="chapter-item">
+                            <h4><i class="fas fa-star"></i> Introduction</h4>
+                            <p>Overview of AI/Spec-Driven Book Creation System</p>
+                        </div>
+                        <div class="chapter-item">
+                            <h4><i class="fas fa-microchip"></i> ROS2 Nervous System</h4>
+                            <p>Concepts, architecture, and implementation</p>
+                        </div>
+                        <div class="chapter-item">
+                            <h4><i class="fas fa-flask"></i> Research</h4>
+                            <p>Concurrent research methodologies and validation</p>
+                        </div>
+                        <div class="chapter-item">
+                            <h4><i class="fas fa-robot"></i> AI Integration</h4>
+                            <p>Content generation and validation approaches</p>
+                        </div>
+                        <div class="chapter-item">
+                            <h4><i class="fas fa-quote-right"></i> Citation Management</h4>
+                            <p>APA format and validation processes</p>
+                        </div>
+                        <div class="chapter-item">
+                            <h4><i class="fas fa-cube"></i> Digital Twin</h4>
+                            <p>Physics simulation, Unity integration, and sensors</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="resources">
+                    <h2><i class="fas fa-lightbulb"></i> Key Resources</h2>
+                    <ul style="padding-left: 1.5rem; margin-top: 1rem;">
+                        <li style="margin-bottom: 0.5rem;"><strong>AI-Assisted Content Generation:</strong> Generate content with AI assistance while maintaining quality control</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Spec-Driven Workflow:</strong> Follow specifications to ensure quality and consistency</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Docusaurus Integration:</strong> Built on Docusaurus for excellent documentation capabilities</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Jetson Integration:</strong> Implementation on NVIDIA Jetson platforms</li>
+                        <li><strong>Lab Exercises:</strong> Practical hands-on activities for learning</li>
+                    </ul>
+                </section>
+            </main>
+
+            <aside class="sidebar">
+                <h3><i class="fas fa-list"></i> Table of Contents</h3>
+                <ul>
+                    <li><a href="#about"><i class="fas fa-info-circle"></i> About This Book</a></li>
+                    <li><a href="#chapters"><i class="fas fa-book"></i> Book Chapters</a></li>
+                    <li><a href="#resources"><i class="fas fa-lightbulb"></i> Key Resources</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Getting Started</a></li>
+                    <li><a href="#"><i class="fas fa-cogs"></i> Architecture</a></li>
+                    <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Lab Exercises</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> Quiz</a></li>
+                    <li><a href="#"><i class="fas fa-book-medical"></i> Digital Twin</a></li>
+                    <li><a href="#"><i class="fas fa-link"></i> Related Projects</a></li>
+                </ul>
+
+                <h3 style="margin-top: 1.5rem;"><i class="fas fa-external-link-alt"></i> Quick Links</h3>
+                <ul>
+                    <li><a href="https://github.com/Reema-29/hackathon-cli-1" target="_blank"><i class="fab fa-github"></i> GitHub Repository</a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-discord"></i> Discord Community</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter Updates</a></li>
+                    <li><a href="#"><i class="fas fa-blog"></i> Project Blog</a></li>
+                </ul>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#chapters">Chapters</a></li>
+                    <li><a href="#">API Reference</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/Reema-29/hackathon-cli-1" target="_blank">GitHub</a></li>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Stack Overflow</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">License</a></li>
+                    <li><a href="#">Contributing</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <p>Join our community for updates and discussions</p>
+                <div class="social-links">
+                    <a href="https://github.com/Reema-29/hackathon-cli-1" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p>&copy; 2026 Physical AI & Humanoid Robotics. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Simple animation for feature cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
